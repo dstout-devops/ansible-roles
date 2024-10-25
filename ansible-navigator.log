@@ -1,0 +1,6 @@
+2024-10-25T18:18:30.763744+00:00 WARNING 'ansible_navigator.image_manager.puller._log_message' Image inspection failed, image assumed to be corrupted or missing
+2024-10-25T18:18:30.763915+00:00 WARNING 'ansible_navigator.image_manager.puller._log_message' stdout: []
+
+2024-10-25T18:18:30.763942+00:00 WARNING 'ansible_navigator.image_manager.puller._log_message' stderr: time="2024-10-25T18:18:30Z" level=warning msg="Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning."
+Error: ghcr.io/ansible/community-ansible-dev-tools:latest: image not known
+

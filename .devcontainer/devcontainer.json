@@ -1,11 +1,20 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "Python 3",
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+	"name": "Ansible Dev Container",
+	"image": "ghcr.io/ansible/community-ansible-dev-tools:latest",
+	"runArgs": [
+		"--privileged"
+	],
+	"updateRemoteUserUID": true,
 	"features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-		"ghcr.io/dstout-devops/devcontainers/ansible-full:latest": {},
-		"ghcr.io/devcontainers/features/terraform:1": {}
+		"ghcr.io/devcontainers/features/python:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.ansible"
+			]
+		}
 	}
 }

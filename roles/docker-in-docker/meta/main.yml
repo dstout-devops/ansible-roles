@@ -1,13 +1,19 @@
 galaxy_info:
   author: dstout-devops
   description: installs docker-in-docker
+
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
   license: MIT
 
-  min_ansible_version: "2.17.0"
-  min_ansible_container_version: 0.2.0
+  min_ansible_version: "2.1"
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
 
   galaxy_tags:
-    - container
+    - docker
 
 dependencies:
   - role: community.docker
