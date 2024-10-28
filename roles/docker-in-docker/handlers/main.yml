@@ -1,2 +1,6 @@
 ---
 # handlers file for docker-in-docker
+- name: Start docker-in-docker
+  ansible.builtin.command: /usr/local/share/docker-init.sh
+  register: output
+  changed_when: true

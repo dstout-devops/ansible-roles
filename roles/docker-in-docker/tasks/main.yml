@@ -49,14 +49,12 @@
       ansible.builtin.copy:
         src: "{{ role_path }}/files/docker-init.sh"
         dest: /usr/local/share/docker-init.sh
-        mode: preserve
+        mode: '0755'
+      notify:
+        - Start docker-in-docker
 
     - name: Set cron job
       ansible.builtin.cron:
         name: "start moby"
+        special_time: reboot
         job: "/usr/local/share/docker-init.sh"
-
-    - name: Run docker-init
-      ansible.builtin.command: sh /usr/local/share/docker-init.sh
-      register: output
-      changed_when: true
