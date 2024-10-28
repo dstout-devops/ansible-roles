@@ -1,2 +1,15 @@
 ---
 # defaults file for docker-in-docker
+
+moby_supported_distributions:
+  - "Ubuntu"
+  - "Debian"
+moby_supported_releases:
+  - "buster"
+  - "bullseye"
+  - "bionic"
+  - "focal"
+  - "jammy"
+
+microsoft_gpg_key_uri: "https://packages.microsoft.com/keys/microsoft.asc"
+microsoft_keyring: "/usr/share/keyrings/microsoft-archive-keyring.gpg"

@@ -1,2 +1,62 @@
 ---
 # tasks file for docker-in-docker
+- name: Task is running from within the role
+  ansible.builtin.debug:
+    msg: "This is a task from docker-in-docker."
+
+- name: Gather facts
+  ansible.builtin.setup:
+
+- name: Install Docker in Docker
+  when: (
+    ansible_distribution in moby_supported_distributions
+    and
+    ansible_distribution_release in moby_supported_releases
+    )
+  block:
+    - name: Import Microsoft GPG key
+      ansible.builtin.apt_key:
+        url: "{{ microsoft_gpg_key_uri }}"
+        state: present
+        keyring: "{{ microsoft_keyring }}"
+      become: true
+    - name: Add Microsoft apt repository
+      ansible.builtin.apt_repository:
+        repo: >
+          deb [arch={{ ansible_architecture }} signed-by={{ microsoft_keyring }}]
+          https://packages.microsoft.com/repos/microsoft-{{ ansible_distribution }}-{{ ansible_distribution_release }}-prod
+          {{ ansible_distribution_release }} main
+        state: present
+        filename: microsoft
+      become: true
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+      become: true
+    - name: Install moby packages
+      ansible.builtin.apt:
+        package:
+          - moby-cli
+          - moby-buildx
+          - moby-engine
+          - moby-compose
+        state: present
+      become: true
+
+    # https://github.com/moby/moby/blob/master/hack/dind
+    - name: Copy init script
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/docker-init.sh"
+        dest: /usr/local/share/docker-init.sh
+        mode: preserve
+
+    - name: Set cron job
+      ansible.builtin.cron:
+        name: "start moby"
+        job: "/usr/local/share/docker-init.sh"
+
+    - name: Run docker-init
+      ansible.builtin.command: sh /usr/local/share/docker-init.sh
+      register: output
+      changed_when: true
